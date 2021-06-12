@@ -1,0 +1,13 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" 
+                controller="TaskCalendarController">
+    <ltng:require scripts="{!join(
+                           $Resource.moment,
+                           $Resource.fullCalendar + '/lib/main.js')}"
+                  styles="{!$Resource.fullCalendar + '/lib/main.css'}"
+                  
+                  afterScriptsLoaded="{!c.scriptsLoaded}" />
+    
+    <div id='calendar'></div>
+    
+    
+</aura:component>
