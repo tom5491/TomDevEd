@@ -1,14 +1,109 @@
 <aura:component controller="FitBitComponentController" implements="flexipage:availableForAllPageTypes,force:hasRecordId">
-    <aura:attribute name="user" type="object" />
-    <aura:attribute name="todayData" type="object" />
-    <aura:attribute name="friends" type="object" />
-    <aura:attribute name="badges" type="object" />
+    <aura:attribute name="user" type="Object" />
+    <aura:attribute name="todayData" type="Object" />
+    <aura:attribute name="friends" type="Object[]" />
+    <aura:attribute name="badges" type="Object[]" />
 
-    <lightning:card 
-    <lightning:layout multipleRows="true" >
-        <lightning:layoutItem size="12" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-        </lightning:layoutItem>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if>
 
-    </lightning:layout>
-</aura:component>	
+    <lightning:card>
+        <aura:set attribute="title">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="12">
+                    <div class="slds-grid">
+                        <div class="slds-col">
+                            <lightning:avatar src="{!v.user.avatar640}" size="large" />
+                        </div>
+                        <div class="slds-col slds-p-left_small">
+                            <p class="slds-text-heading--label">
+                                <lightning:formattedRichText value="&lt;b&gt;FITBIT NAME&lt;/b&gt;" />
+                            </p>
+                            <h1 class="slds-text-heading--medium">
+                                <lightning:formattedText value="{!v.user.fullName}" />
+                            </h1>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </aura:set>
+        <aura:set attribute="footer">
+            <lightning:badge label="Tag1" />
+            <lightning:badge label="Tag2" />
+            <lightning:badge label="Tag3" />
+        </aura:set>
+
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
+                <p class="slds-text-heading--label">
+                    <lightning:formattedRichText value="&lt;b&gt;ABOUT ME&lt;/b&gt;" />
+                </p>
+                <h1 class="slds-text-heading--medium">
+                    <lightning:formattedText value="{!v.user.aboutMe}" />
+                </h1>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
+                <p class="slds-text-heading--label">
+                    <lightning:formattedRichText value="&lt;b&gt;AVG. DAILY STEPS&lt;/b&gt;" />
+                </p>
+                <h1 class="slds-text-heading--medium">
+                    <lightning:formattedNumber value="{!v.user.averageDailySteps}" />
+                </h1>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
+                <p class="slds-text-heading--label">
+                    <lightning:formattedRichText value="&lt;b&gt;HEIGHT&lt;/b&gt;" />
+                </p>
+                <h1 class="slds-text-heading--medium">
+                    <lightning:formattedNumber value="{!v.user.height}" />
+                </h1>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
+                <p class="slds-text-heading--label">
+                    <lightning:formattedRichText value="&lt;b&gt;WEIGHT&lt;/b&gt;" />
+                </p>
+                <h1 class="slds-text-heading--medium">
+                    <lightning:formattedNumber value="{!v.user.weight}" />
+                </h1>
+            </lightning:layoutItem>
+
+            <hr class="slds-p-top_small slds-p-bottom_small" width="100%" />
+
+            <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
+                <lightning:verticalNavigation selectedItem="reports_recent">
+                    <lightning:verticalNavigationSection label="Reports">
+                        <div class="slds-grid">
+                            <div class="slds-col">
+                                <lightning:avatar src="{!$Resource.stepIcon}" size="x-small" />
+                            </div>
+                            <div class="slds-col">
+                                <lightning:verticalNavigationItemIcon label="Steps" name="steps" />
+                            </div>
+                        </div>
+
+                        <lightning:verticalNavigationItemIcon label="Created by Me" name="reports_usercreated" iconName="utility:user" />
+
+                        <lightning:verticalNavigationItemIcon label="Private Reports" name="reports_private" iconName="utility:lock" />
+
+                        <lightning:verticalNavigationItemIcon label="Public Reports" name="reports_public" iconName="utility:groups" />
+
+                        <lightning:verticalNavigationItem label="All Reports" name="reports_all" />
+                    </lightning:verticalNavigationSection>
+
+                    <lightning:verticalNavigationSection label="Folders">
+                        <lightning:verticalNavigationItemIcon label="Created by Me" name="folders_usercreated" iconName="{!$Resource.stepIcon}" />
+
+                        <lightning:verticalNavigationItemIcon label="Shared with Me" name="folders_shared" iconName="utility:open_folder" />
+                    </lightning:verticalNavigationSection>
+                </lightning:verticalNavigation>
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="9">
+                <img src="{!$Resource.stepIcon}" />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:card>
+</aura:component>
