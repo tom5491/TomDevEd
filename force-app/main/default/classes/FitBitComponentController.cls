@@ -1,7 +1,7 @@
 /**
  * @description       :
  * @author            : Tom Philippou
- * @last modified on  : 16-06-2021
+ * @last modified on  : 12-06-2021
  * @last modified by  : Tom Philippou
  * Modifications Log
  * Ver   Date         Author          Modification
@@ -16,10 +16,6 @@ public class FitBitComponentController {
     @AuraEnabled
     public static string getTodaySummary() {
         return getResponseBody('callout:FitBit/1/user/-/activities/date/today.json');
-    }
-
-    public static string getUserDetails() {
-        String latestActivity = getResponseBody('callout:FitBit/1/user/-/profile.json');
     }
 
     @AuraEnabled
