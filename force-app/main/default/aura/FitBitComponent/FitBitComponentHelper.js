@@ -50,5 +50,21 @@
             }
         });
         $A.enqueueAction(badges);
+    },
+    getStepData: function (component, helper) {
+        var steps = component.get("c.getSteps");
+        steps.setParams({
+            dateVariable: "today/1d"
+        });
+        steps.setCallback(this, function (response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                var parseJson = JSON.parse(response.getReturnValue());
+                //component.set("v.steps", parseJson.steps);
+            } else if (state === "ERROR") {
+                console.log("Error");
+            }
+        });
+        $A.enqueueAction(steps);
     }
 });

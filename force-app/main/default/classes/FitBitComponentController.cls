@@ -1,7 +1,7 @@
 /**
  * @description       :
  * @author            : Tom Philippou
- * @last modified on  : 12-06-2021
+ * @last modified on  : 19-06-2021
  * @last modified by  : Tom Philippou
  * Modifications Log
  * Ver   Date         Author          Modification
@@ -19,8 +19,10 @@ public class FitBitComponentController {
     }
 
     @AuraEnabled
-    public static void getSteps() {
-        String todayStepsJson = getResponseBody('callout:FitBit/1/user/-/activities/steps/date/today/1d.json');
+    public static String getSteps(String dateVariable) {
+        String todayStepsJson = getResponseBody('callout:FitBit/1/user/-/activities/steps/date/' + dateVariable + '.json');
+        System.debug('todayStepsJson: ' + todayStepsJson);
+        return todayStepsJson;
     }
 
     @AuraEnabled

@@ -38,6 +38,7 @@
         </aura:set>
 
         <lightning:layout multipleRows="true">
+            <!-- TOP INFO SECTION -->
             <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
                 <p class="slds-text-heading--label">
                     <lightning:formattedRichText value="&lt;b&gt;ABOUT ME&lt;/b&gt;" />
@@ -70,39 +71,66 @@
                     <lightning:formattedNumber value="{!v.user.weight}" />
                 </h1>
             </lightning:layoutItem>
+            <!--/ TOP INFO SECTION -->
 
-            <hr class="slds-p-top_small slds-p-bottom_small" width="100%" />
+            <hr class="slds-p-top_small" style="margin-bottom: 0" width="100%" />
 
             <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
-                <lightning:verticalNavigation selectedItem="reports_recent">
-                    <lightning:verticalNavigationSection label="Reports">
-                        <div class="slds-grid">
-                            <div class="slds-col">
-                                <lightning:avatar src="{!$Resource.stepIcon}" size="x-small" />
-                            </div>
-                            <div class="slds-col">
-                                <lightning:verticalNavigationItemIcon label="Steps" name="steps" />
-                            </div>
+                <div class="demo-only" style="width: 320px">
+                    <nav class="slds-nav-vertical" aria-label="Sub page">
+                        <div class="slds-nav-vertical__section">
+                            <h2 id="entity-header" class="slds-nav-vertical__title">Charts</h2>
+                            <ul aria-describedby="entity-header">
+                                <li class="slds-nav-vertical__item slds-is-active">
+                                    <a id="todaySteps" href="javascript:void(0)" class="slds-nav-vertical__action" onclick="{!c.getChartData}">
+                                        <span class="slds-icon_container slds-icon-utility-open_folder slds-line-height_reset" title="Folder">
+                                            <img src="{!$Resource.stepIcon}" class="slds-icon slds-icon-text-default slds-icon_x-small slds-m-right_x-small" aria-hidden="true" />
+
+                                            <span class="slds-assistive-text">Folder</span> </span
+                                        >Steps Today</a
+                                    >
+                                </li>
+                                <li class="slds-nav-vertical__item">
+                                    <a href="#" class="slds-nav-vertical__action">Created by Me</a>
+                                </li>
+                                <li class="slds-nav-vertical__item">
+                                    <a href="#" class="slds-nav-vertical__action">Private Reports</a>
+                                </li>
+                                <li class="slds-nav-vertical__item">
+                                    <a href="#" class="slds-nav-vertical__action">Public Reports</a>
+                                </li>
+                                <li class="slds-nav-vertical__item">
+                                    <a href="#" class="slds-nav-vertical__action">All Reports</a>
+                                </li>
+                            </ul>
                         </div>
+                        <div class="slds-nav-vertical__section">
+                            <h2 id="folder-header" class="slds-nav-vertical__title">Folders</h2>
+                            <ul aria-describedby="folder-header">
+                                <li class="slds-nav-vertical__item">
+                                    <a href="#" class="slds-nav-vertical__action">
+                                        <span class="slds-icon_container slds-icon-utility-open_folder slds-line-height_reset" title="Folder">
+                                            <img src="{!$Resource.stepIcon}" class="slds-icon slds-icon-text-default slds-icon_x-small slds-m-right_x-small" aria-hidden="true" />
 
-                        <lightning:verticalNavigationItemIcon label="Created by Me" name="reports_usercreated" iconName="utility:user" />
-
-                        <lightning:verticalNavigationItemIcon label="Private Reports" name="reports_private" iconName="utility:lock" />
-
-                        <lightning:verticalNavigationItemIcon label="Public Reports" name="reports_public" iconName="utility:groups" />
-
-                        <lightning:verticalNavigationItem label="All Reports" name="reports_all" />
-                    </lightning:verticalNavigationSection>
-
-                    <lightning:verticalNavigationSection label="Folders">
-                        <lightning:verticalNavigationItemIcon label="Created by Me" name="folders_usercreated" iconName="{!$Resource.stepIcon}" />
-
-                        <lightning:verticalNavigationItemIcon label="Shared with Me" name="folders_shared" iconName="utility:open_folder" />
-                    </lightning:verticalNavigationSection>
-                </lightning:verticalNavigation>
+                                            <span class="slds-assistive-text">Folder</span> </span
+                                        >Created by Me</a
+                                    >
+                                </li>
+                                <li class="slds-nav-vertical__item">
+                                    <a href="#" class="slds-nav-vertical__action">
+                                        <span class="slds-icon_container slds-icon-utility-open_folder slds-line-height_reset" title="Folder"> <span class="slds-assistive-text">Folder</span> </span>Shared with Me</a
+                                    >
+                                </li>
+                                <li class="slds-nav-vertical__item">
+                                    <a href="#" class="slds-nav-vertical__action">All Reports</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
             </lightning:layoutItem>
             <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="9">
-                <img src="{!$Resource.stepIcon}" />
+                <div id="container" style="height: 400px; min-width: 310px"></div>
             </lightning:layoutItem>
         </lightning:layout>
     </lightning:card>
