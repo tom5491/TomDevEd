@@ -25,7 +25,7 @@ public class PlannerTriggerHandler extends TriggerHandler {
             }
         }
         //Add revision start date
-        Date startDate = Date.newInstance(2020, 6, 29);
+        Date startDate = Date.newInstance(2021, 06, 27);
 
         //Loop through new records
         for (Planner__c nlp : newList) {
@@ -40,7 +40,7 @@ public class PlannerTriggerHandler extends TriggerHandler {
             String strNoOfDays = String.valueOf(noOfDays).leftPad(3, '0');
 
             //Name Syntax
-            nlp.Name = 'Day-' + strNoOfDays + '-' + formatDate;
+            nlp.Name = 'Day-' + strNoOfDays + '- PD2 -' + formatDate;
         }
     }
     public override void afterInsert() {
