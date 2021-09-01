@@ -1,0 +1,77 @@
+<!--
+  @description       : 
+  @author            : Tom Philippou
+  @group             : 
+  @last modified on  : 27-08-2021
+  @last modified by  : Tom Philippou
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   27-08-2021   Tom Philippou   Initial Version
+-->
+<aura:component controller="UkGovCharityComponentController">
+    <aura:attribute name="accountObject" type="object" />
+    <aura:attribute name="selection" type="object" />
+    <lightning:layout multipleRows="true">
+        <!-- Title -->
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">{!v.accountObject.rowTitle}</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">Current</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">New</p>
+        </lightning:layoutItem>
+        <!-- ROW 1 -->
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">{!v.rowTitle.row1}</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="8">
+            <p><c:RadioSelectorComponent option1="{!v."</p>
+        </lightning:layoutItem>
+        <!-- ROW 2 -->
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">{!v.rowTitle.row2}</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4">
+            <p>
+                <lightning:input type="radio" aura:id="row2Current" label="{!v.accountObject.rowTitle.row2Current}" />
+            </p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4">
+            <p>
+                <lightning:input type="radio" aura:id="row2New" label="{!v.accountObject.rowTitle.row2New}" />
+            </p>
+        </lightning:layoutItem>
+        <!-- ROW 3 -->
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">{!v.rowTitle.row3}</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <!-- ROW 4 -->
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">{!v.rowTitle.row4}</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <!-- ROW 5 -->
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">{!v.rowTitle.row5}</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <!-- ROW 6 -->
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">{!v.rowTitle.row6}</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <!-- ROW 7 -->
+        <lightning:layoutItem size="4">
+            <p class="rowTitle">{!v.rowTitle.row7}</p>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+        <lightning:layoutItem size="4"> </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
