@@ -1,0 +1,28 @@
+<!--
+  @description       : 
+  @author            : Tom Philippou
+  @group             : 
+  @last modified on  : 27-08-2021
+  @last modified by  : Tom Philippou
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   27-08-2021   Tom Philippou   Initial Version
+-->
+<aura:component>
+    <aura:attribute name="option1" type="String" />
+    <aura:attribute name="option2" type="String" />
+    <aura:attribute name="option1Value" type="String" />
+    <aura:attribute name="option2Value" type="String" />
+    <aura:attribute name="options" type="List" />
+
+    <aura:handler name="init" value="{! this }" action="{! c.doinit }" />
+
+    <lightning:layout>
+        <lightning:layoutItem size="6">
+            <lightning:radioGroup aura:id="option1" label="option1" value="{!v.option1Value}" />
+        </lightning:layoutItem>
+        <lightning:layoutItem size="6">
+            <lightning:radioGroup aura:id="option2" label="option1" value="{!v.option2Value}" />
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

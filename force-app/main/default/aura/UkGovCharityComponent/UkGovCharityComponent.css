@@ -1,0 +1,10 @@
+.THIS {
+}
+
+.THIS .searchBar {
+    width: 100%;
+}
+
+.THIS .largeModal > .slds-modal__content {
+    width: 80%;
+}
