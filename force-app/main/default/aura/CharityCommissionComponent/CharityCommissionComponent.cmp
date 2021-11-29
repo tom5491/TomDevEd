@@ -1,0 +1,288 @@
+<!--
+  @description       : 
+  @author            : Tom Philippou
+  @group             : 
+  @last modified on  : 24-09-2021
+  @last modified by  : Tom Philippou
+  Modifications Log
+  Ver   Date         Author          Modification
+  1.0   25-08-2021   Tom Philippou   Initial Version
+-->
+<aura:component controller="CharityCommissionComponentController" implements="flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:attribute name="selectedValue" type="String" default="searchCharityName" />
+    <aura:attribute name="registeredNumber" type="String" default="" />
+    <aura:attribute name="suffix" type="String" default="" />
+    <aura:attribute name="charityName" type="String" default="" />
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="charityInfo" type="List" default="[]" />
+    <aura:attribute name="isSuccess" type="Boolean" default="false" />
+    <aura:attribute name="disableNext" type="Boolean" default="false" />
+    <aura:attribute name="fieldUpdateList" type="List" default="[]" />
+    <aura:attribute name="updateSuccess" type="Boolean" default="false" />
+    <aura:attribute name="currentAccount" type="Account" />
+    <aura:attribute name="selectedRow" type="Object" />
+
+    <aura:attribute name="fieldMap" type="Map" default="{}" />
+
+    <aura:attribute name="data" type="List" />
+    <aura:attribute name="tableData" type="List" />
+    <aura:attribute name="columns" type="List" />
+
+    <aura:attribute name="pageNumber" type="Integer" default="0" />
+
+    <aura:handler name="init" value="{! this }" action="{! c.init }" />
+
+    <!-- <lightning:card title="Charity Search"> -->
+
+    <!--Custom Styles for Modal Header and Footer-->
+    <aura:html tag="style">
+        .cuf-content { padding: 0 0rem !important; } .slds-p-around--medium { padding: 0rem !important; } .slds-modal__content{ overflow-y:hidden !important; height:unset !important; max-height:unset !important; } .slds-modal__container {
+        min-width: 90vw; }
+    </aura:html>
+
+    <!--Modal Header-->
+    <div class="modal-header slds-modal__header slds-size_1-of-1">
+        <h4 class="title slds-text-heading--medium">Charity Commission</h4>
+    </div>
+    <!--End Modal Header-->
+
+    <!--Modal Body-->
+    <!-- {!v.pageNumber} -->
+    <div style="min-width: 672px; position: relative" aura:id="modalContainer" class="slds-modal__content">
+        <aura:if isTrue="{!v.showSpinner}">
+            <div>
+                <lightning:spinner size="medium" class="spins" />
+            </div>
+        </aura:if>
+        <lightning:layout multipleRows="true">
+            <aura:if isTrue="{!v.pageNumber == 0}">
+                <lightning:layoutItem class="slds-p-around_small slds-align_absolute-center" size="12">
+                    <p class="slds-p-around_large">LOADING...</p>
+                </lightning:layoutItem>
+            </aura:if>
+            <aura:if isTrue="{!v.pageNumber == 1}">
+                <lightning:layoutItem class="slds-p-around_small" size="12">
+                    <div style="display: flex; align-items: center; min-height: 154px">
+                        <lightning:input class="searchBar" label="Charity Name:" required="true" value="{!v.currentAccount.Name}" />
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+            <aura:if isTrue="{!v.pageNumber == 2}">
+                <aura:if isTrue="{!not(empty(v.tableData))}">
+                    <lightning:layoutItem class="slds-p-around_small slds-align_absolute-center" size="12">
+                        <div style="text-align: center">
+                            <p>Please select a Charity and press next. This will then query Charity Commission and retrieve details.</p>
+                            <p>Note: This process can take between 1 and 2 minutes to complete.</p>
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem class="slds-p-around_small" size="12">
+                        <lightning:datatable aura:id="charityDataTable" columns="{! v.columns }" data="{! v.tableData }" keyField="id" maxRowSelection="1" />
+                    </lightning:layoutItem>
+                    <aura:set attribute="else">
+                        <lightning:layoutItem class="slds-p-around_small slds-align_absolute-center" size="12">
+                            <p class="slds-p-around_large">No records have been found for "{!v.currentAccount.Name}"</p>
+                        </lightning:layoutItem>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!v.pageNumber == 3}">
+                <lightning:layoutItem class="slds-p-around_small" size="12">
+                    <lightning:layout class="slds-table slds-table_cell-buffer slds-table_bordered" multipleRows="true">
+                        <table style="table-layout: fixed; min-width: 672px" class="slds-table slds-table_cell-buffer slds-table_bordered" aria-labelledby="element-with-table-label other-element-with-table-label">
+                            <colgroup>
+                                <col span="1" style="width: 34%" />
+                                <col span="1" style="width: 33%" />
+                                <col span="1" style="width: 33%" />
+                            </colgroup>
+
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div style="word-wrap: break-word" title=""></div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div style="display: flex; align-items: center">
+                                            <div>
+                                                <lightning:icon iconName="standard:account" size="small" alternativeText="account" />
+                                            </div>
+                                            <div class="slds-p-left_small" style="word-wrap: break-word" title="Account">&nbsp;ACCOUNT</div>
+                                        </div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div style="display: flex; align-items: center">
+                                            <div>
+                                                <lightning:icon iconName="custom:custom15" size="small" alternativeText="charity" />
+                                            </div>
+                                            <div class="slds-p-left_small" style="word-wrap: break-word" title="Charity Commission">&nbsp;CHARITY COMMISSION</div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.data}" var="item" indexVar="index">
+                                    <tr class="slds-hint-parent">
+                                        <td>
+                                            <b>{!item.rowTitle}</b>
+                                        </td>
+                                        <td colspan="1">
+                                            <div style="display: flex; justify-content: left; align-items: center; word-wrap: break-word">
+                                                <span class="slds-radio">
+                                                    <input type="radio" id="{!item.accValue}" value="{!item.accValue}" name="{!item.rowTitle}" checked="true" />
+                                                    <label class="slds-radio__label" for="{!item.accValue}">
+                                                        <span class="slds-radio_faux"></span>
+                                                        <span class="slds-form-element__label"> </span>
+                                                    </label>
+                                                </span>
+                                                <div class="slds-radio__label" style="white-space: normal">
+                                                    <aura:if isTrue="{!item.fieldType == 'Text'}"> {!item.accLabel} </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Email'}"> {!item.ccLabel} </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Currency'}">
+                                                        <lightning:formattedNumber value="{!item.accLabel}" style="currency" currencyCode="GBP" currencyDisplayAs="symbol" />
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Date'}">
+                                                        <lightning:formattedDateTime value="{!item.accLabel}" year="numeric" month="2-digit" day="2-digit" />
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Phone'}"> {!item.accLabel} </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Rich Text'}">
+                                                        <span>
+                                                            <lightning:formattedRichText value="{!item.accLabel}" />
+                                                        </span>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Website'}">
+                                                        <lightning:formattedUrl value="{!item.accLabel}" target="_blank" />
+                                                    </aura:if>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td colspan="1">
+                                            <div style="display: flex; justify-content: left; align-items: center; word-wrap: break-word">
+                                                <span style="float: left" class="slds-radio">
+                                                    <input type="radio" id="{!item.ccValue}" value="{!item.ccValue}" name="{!item.rowTitle}" />
+                                                    <label class="slds-radio__label" for="{!item.ccValue}">
+                                                        <span class="slds-radio_faux"></span>
+                                                        <span class="slds-form-element__label"> </span>
+                                                    </label>
+                                                </span>
+                                                <div class="slds-radio__label" style="white-space: normal">
+                                                    <aura:if isTrue="{!item.fieldType == 'Text'}"> {!item.ccLabel} </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Email'}"> {!item.ccLabel} </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Currency'}">
+                                                        <lightning:formattedNumber value="{!item.ccLabel}" style="currency" currencyCode="GBP" currencyDisplayAs="symbol" />
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Date'}">
+                                                        <lightning:formattedDateTime value="{!item.ccLabel}" year="numeric" month="2-digit" day="2-digit" />
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Phone'}"> {!item.ccLabel} </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Rich Text'}">
+                                                        <span>
+                                                            <lightning:formattedRichText value="{!item.ccLabel}" />
+                                                        </span>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!item.fieldType == 'Website'}">
+                                                        <lightning:formattedUrl value="{!item.ccLabel}" target="_blank" />
+                                                    </aura:if>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </lightning:layout>
+                </lightning:layoutItem>
+            </aura:if>
+            <aura:if isTrue="{!v.pageNumber == 4}">
+                <lightning:layoutItem class="slds-p-around_small" size="12">
+                    <p style="text-align: center">
+                        <aura:if isTrue="{!and(v.isSuccess, not(empty(v.fieldUpdateList)))}">
+                            Account has been successfully updated!
+                            <aura:set attribute="else"> Account has not been successfully updated! </aura:set>
+                        </aura:if>
+                    </p>
+                </lightning:layoutItem>
+
+                <lightning:layoutItem class="slds-p-around_small slds-align_absolute-center" size="12">
+                    <hr style="border-color: black; border-style: solid; width: 95%" />
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-p-around_small" size="12">
+                    <div class="slds-p-left_large">
+                        <aura:if isTrue="{!not(empty(v.fieldUpdateList))}">
+                            <p class="slds-p-around_small">
+                                <b>The following fields have been updated:</b>
+                            </p>
+                            <br />
+                            <br />
+                            <aura:iteration items="{!v.fieldUpdateList}" var="item">
+                                <p class="slds-p-left_large">{!item}</p>
+                                <br />
+                            </aura:iteration>
+                            <aura:set attribute="else">
+                                <p class="slds-p-around_small">
+                                    <b>No fields have been updated...</b>
+                                </p>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                </lightning:layoutItem>
+            </aura:if>
+        </lightning:layout>
+    </div>
+    <!--End of Modal Body-->
+
+    <!--Modal Footer-->
+    <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+        <aura:if isTrue="{!and(v.pageNumber != 0, v.pageNumber != 1)}">
+            <lightning:button variant="Neutral" class="slds-button" label="Previous" onclick="{!c.previousPage}" />
+        </aura:if>
+        <aura:if isTrue="{!v.pageNumber != 4}">
+            <lightning:button variant="Brand" class="slds-button" label="Next" onclick="{!c.nextPage}" disabled="{!v.disableNext}" />
+        </aura:if>
+        <aura:if isTrue="{!v.pageNumber == 4}">
+            <lightning:button variant="Brand" class="slds-button" label="Finish" onclick="{!c.closeModal}" />
+        </aura:if>
+    </div>
+    <!--End of Modal Footer-->
+
+    <!-- 
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem class="slds-p-around_small" size="12">
+                <lightning:select name="calloutSelect" label="Callout" value="{!v.selectedValue}">
+                    <option value="">choose one...</option>
+                    <option value="allcharitydetails">Get All Charity Details</option>
+                    <option value="searchCharityName">Search By Charity Name</option>
+                </lightning:select>
+            </lightning:layoutItem>
+
+            <aura:if isTrue="{!v.selectedValue == 'allcharitydetails'}">
+                <lightning:layoutItem class="slds-p-around_small" size="6">
+                    <lightning:input label="Registered Number" required="true" value="{!v.registeredNumber}" />
+                </lightning:layoutItem>
+                <lightning:layoutItem class="slds-p-around_small" size="6">
+                    <lightning:input label="Supplementary Number" required="true" value="{!v.suffix}" fieldLevelHelp="If unsure, try 0." />
+                </lightning:layoutItem>
+            </aura:if>
+            <aura:if isTrue="{!v.selectedValue == 'searchCharityName'}">
+                <lightning:layoutItem class="slds-p-around_small" size="12">
+                    <lightning:input label="Charity Name:" required="true" type="search" value="{!v.charityName}" oncommit="{!c.searchCommit}" />
+                </lightning:layoutItem>
+            </aura:if>
+            <lightning:layoutItem class="slds-p-around_small slds-align_absolute-center" size="12">
+                <lightning:button label="Search" onclick="{!c.search}" />
+            </lightning:layoutItem>
+
+            <aura:if isTrue="{!v.isSuccess}">
+                <aura:iteration items="{!v.charityInfo}" var="cus" indexVar="key">
+                    <lightning:layoutItem class="slds-p-around_small" size="6"> <b>{!cus.key} </b></lightning:layoutItem>
+
+                    <lightning:layoutItem class="slds-p-around_small" size="6"> {!cus.value} </lightning:layoutItem>
+                    <aura:if isTrue="{!cus.key == 'Date of Removal:'}">
+                        <lightning:layoutItem class="slds-p-around_small" size="12">
+                            <hr style="border-color: black; border-style: solid; width: 100%" />
+                        </lightning:layoutItem>
+                    </aura:if>
+                </aura:iteration>
+            </aura:if>
+        </lightning:layout> -->
+    <!-- </lightning:card> -->
+</aura:component>

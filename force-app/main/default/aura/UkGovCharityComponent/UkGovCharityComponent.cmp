@@ -8,7 +8,7 @@
   Ver   Date         Author          Modification
   1.0   25-08-2021   Tom Philippou   Initial Version
 -->
-<aura:component controller="UkGovCharityComponentController" implements="flexipage:availableForAllPageTypes, force:lightningQuickActionWithoutHeader, force:hasRecordId">
+<aura:component controller="UkGovCharityComponentController" implements="flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId">
     <aura:attribute name="selectedValue" type="String" default="searchCharityName" />
     <aura:attribute name="registeredNumber" type="String" default="" />
     <aura:attribute name="suffix" type="String" default="" />

@@ -20,9 +20,7 @@
                             <lightning:avatar src="{!v.user.avatar640}" size="large" />
                         </div>
                         <div class="slds-col slds-p-left_small">
-                            <p class="slds-text-heading--label">
-                                <lightning:formattedRichText value="&lt;b&gt;FITBIT NAME&lt;/b&gt;" />
-                            </p>
+                            <p class="slds-text-heading--label" style="font-weight: 800">FITBIT NAME</p>
                             <h1 class="slds-text-heading--medium">
                                 <lightning:formattedText value="{!v.user.fullName}" />
                             </h1>

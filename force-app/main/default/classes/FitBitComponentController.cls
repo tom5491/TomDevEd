@@ -13,6 +13,7 @@ public class FitBitComponentController {
         return getResponseBody('callout:FitBit/1/user/-/profile.json');
     }
 
+    
     @AuraEnabled
     public static string getTodaySummary() {
         return getResponseBody('callout:FitBit/1/user/-/activities/date/today.json');

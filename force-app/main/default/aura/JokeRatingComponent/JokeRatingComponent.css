@@ -1,0 +1,6 @@
+.THIS {
+}
+
+.THIS .rangeHidden .slds-slider-label__range {
+    display: none;
+}
