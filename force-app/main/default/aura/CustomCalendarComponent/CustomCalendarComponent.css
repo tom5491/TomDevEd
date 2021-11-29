@@ -5,11 +5,13 @@
     height: 100%;
     border-style: solid;
     border-width: 1px;
+    border-collapse: collapse;
 }
 
 .THIS .whole-calendar{
     border-style: solid;
     border-width: 1px;
+    border-collapse: collapse;
 }
 
 .THIS .day-text{

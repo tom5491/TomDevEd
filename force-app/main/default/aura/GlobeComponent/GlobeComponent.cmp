@@ -1,0 +1,16 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+
+    <ltng:require scripts="{!join(',', 
+    $Resource.topojsonclientminjs, 
+    $Resource.highmapsjs,
+    $Resource.exportingjs,
+    $Resource.datajs
+    )}"
+    afterScriptsLoaded="{!c.init}" />
+    
+    
+    <figure class="highcharts-figure">
+      <div id="world-container"></div>
+    </figure>
+
+</aura:component>	

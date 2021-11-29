@@ -23,7 +23,7 @@ global class BadgePlannerSchedule implements Schedulable {
 
         try {
             newPb = [SELECT Id, Name FROM Planner__c WHERE Study_Date__c = :tomorrowDate];
-        } catch (NullPointerException npe) {
+        } catch (QueryException npe) {
             newPb = new Planner__c(Name = 'default', Study_Date__c = tomorrowDate);
             insert newPb;
         }
