@@ -1,0 +1,165 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <ltng:require scripts="{!$Resource.jQuery}" afterScriptsLoaded="{!c.initMethod}"/>
+
+    <lightning:card title="Draggable Table" class="slds-box slds-box_small">
+        <div class="slds-scrollable_x">
+
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
+                
+                <tbody  min-width="400px">
+                    <tr>
+                        <th min-width="80px">
+    
+                        </th>
+                        <th style="width:80px">
+                            01/01/2020
+                        </th>
+                        <th style="width:80px">
+                            01/02/2020
+                        </th>
+                        <th style="width:80px">
+                            01/03/2020
+                        </th>
+                        <th style="width:80px">
+                            01/04/2020
+                        </th>
+                        <th style="width:80px">
+                            01/05/2020
+                        </th>
+                        <th style="width:80px">
+                            01/06/2020
+                        </th>
+                        <th style="width:80px">
+                            01/07/2020
+                        </th>
+                        <th style="width:80px">
+                            01/08/2020
+                        </th>
+                    </tr>
+                    <tr>
+                        <!-- <td id="div1" ondrop="{!c.drop}" ondragover="{!c.allowDrop}" style="text-align: center">
+                            <div id="buttonDiv1" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="1"/>
+                            </div>
+                        </td>
+                        <td id="div2" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv2" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="2"/>
+                            </div>
+                        </td>
+                        <td id="div3" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div4" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td> -->
+                        <td id="yAxisTitles">AV Consultant</td>
+                        <td id="div1" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv1" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="1"/>
+                            </div>
+                        </td>
+                        <td id="div2" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv2" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="2"/>
+                            </div>
+                        </td>
+                        <td id="div3" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div4" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div5" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv1" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="1"/>
+                            </div>
+                        </td>
+                        <td id="div6" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv2" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="2"/>
+                            </div>
+                        </td>
+                        <td id="div7" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div8" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                    </tr>
+                    <tr style="min-height: 36px">
+                        <td id="yAxisTitles">CAD</td>
+                        <td id="div9" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv3" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="1"/>
+                            </div>
+                        </td>
+                        <td id="div10" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv4" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="2"/>
+                            </div>
+                        </td>
+                        <td id="div11" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div12" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div13" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv3" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="1"/>
+                            </div>
+                        </td>
+                        <td id="div14" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv4" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="2"/>
+                            </div>
+                        </td>
+                        <td id="div15" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div16" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                    </tr>
+                    <tr style="min-height: 36px">
+                        <td id="yAxisTitles"><b>Monthly Totals</b></td>
+                        <td id="div9" ondrop="{!c.drop}" ondragover="{!c.allowDrop}" onclick="{!c.}">
+                            <div id="buttonDiv3" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="1"/>
+                            </div>
+                        </td>
+                        <td id="div10" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv4" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="2"/>
+                            </div>
+                        </td>
+                        <td id="div11" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div12" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div13" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv3" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="1"/>
+                            </div>
+                        </td>
+                        <td id="div14" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            <div id="buttonDiv4" draggable="true" ondragstart="{!c.drag}" class="nodrop">
+                                <lightning:button label="2"/>
+                            </div>
+                        </td>
+                        <td id="div15" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                        <td id="div16" ondrop="{!c.drop}" ondragover="{!c.allowDrop}">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </lightning:card>
+
+</aura:component>	

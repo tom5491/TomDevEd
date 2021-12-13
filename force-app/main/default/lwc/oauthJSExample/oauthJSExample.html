@@ -1,4 +1,53 @@
 <template>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col" style="width:25%">
+            <span>
+                <lightning-card title="Starling Portal">
+                    <img src="https://s.studiobinder.com/wp-content/uploads/2019/06/Best-M-Night-Shyamalan-Movies-and-Directing-Style-StudioBinder.jpg" />
+                    <p class="slds-p-horizontal_small"></p>
+                    <div class="Search">
+                        <lightning-input value={movieStr} onchange={moviename} label="Search Online Database" placeholder="Movie or Series Name...."> </lightning-input>
+                    </div>
+                    <p></p>
+                    <p slot="footer">
+                        <lightning-button label="Search" onclick={getvalues}> </lightning-button>
+                    </p>
+                </lightning-card>
+            </span>
+        </div>
+        <div class="slds-col" style="width:75%">
+            <span>
+                <template if:true={datafound}>
+                    <lightning-card title="">
+                        <p></p>
+                        <h1>{showval.Title}<br /></h1>
+                        <div class="card">Year: {showval.Year}<br /></div>
+                        <div class="card">Genre: {showval.Genre}<br /></div>
+                        <div class="card">Languages: {showval.Language}</div>
+                        <div class="card">Awards: {showval.Awards}</div>
+                        <div class="card">Writer:{showval.Writer}</div>
+                        <div class="card">Actors: {showval.Actors}<br /></div>
+                        <div class="card">Plot: {showval.Plot}<br /></div>
+                        <div class="card rating">Ratings:</div>
+                        <template for:each={showval.Ratings} for:item="rec" for:index="index">
+                            <p key={rec.Source}></p>
+                            <div key={rec.Source} class="card">
+                                {rec.Source}: {rec.Value}
+                                <lightning-progress-ring key={rec.Source} value={rec.newValue} size="large"> </lightning-progress-ring>
+                            </div>
+                        </template>
+                        <template if:true={backupimg}>
+                            <img src="https://s.studiobinder.com/wp-content/uploads/2019/06/Best-M-Night-Shyamalan-Movies-and-Directing-Style-StudioBinder.jpg" />
+                        </template>
+                        <template if:false={backupimg}><img src={showval.Poster} /></template>
+                    </lightning-card>
+                </template>
+                <template if:true={nodata}>
+                    <lightning-card title="Movie Not Found. Please Check Spelling"></lightning-card>
+                </template>
+            </span>
+        </div>
+    </div>
     <p>Demo from this article: <a href="https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/">https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/</a></p>
 
     <p>Add your Petfinder API key and secret to the variables in the JS section, then check the console.</p>
