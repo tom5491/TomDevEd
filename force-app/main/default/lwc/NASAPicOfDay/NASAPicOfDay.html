@@ -1,18 +1,55 @@
 <template>
-    <head class="main">
-        <h1>
-            {title}
-        </h1>
-    </head>
-    <body>
-        <lightning-card title={title} icon-name="utility:photo">
-            <lightning-layout>
-                <lightning-layout-item size="12">
-                    <div>
-                        <img src=/>
+    <template if:true={nasaPicObj}>
+    <div>
+        <lightning-card icon-name="utility:photo">
+            <div slot="title">
+                <h1>Astronomical Photo of the Day</h1>
+            </div>
+            <br/>
+            <div class="date-container">
+                <span>
+                    <lightning-button-icon name="backDate" icon-name="utility:chevronleft" variant="bare" onclick={onDateChange}></lightning-button-icon>
+                </span>
+                <span>
+                    <b>&nbsp;<lightning-formatted-date-time value={nasaPicObj.date}></lightning-formatted-date-time>&nbsp;</b>
+                </span>
+                <span>
+                    <template if:false={isToday}>
+                        <lightning-button-icon name="forwardDate" icon-name="utility:chevronright" variant="bare" onclick={onDateChange}></lightning-button-icon>
+                    </template>
+                </span>
+            </div>
+            <div class="date-container">
+                <span onclick={onTodayDate}>Today</span>
+                &nbsp;|&nbsp;
+                <span onclick={onRandomPic}>Random</span> 
+            </div>
+            <br/>
+            <div class="title">
+                {nasaPicObj.title}
+            </div>
+            <div class="container">
+                <template if:true={isImage}>
+                    <img src={nasaPicObj.hdurl} class="image"/>
+                    <div class="overlay">
+                        {nasaPicObj.explanation}
                     </div>
-                </lightning-layout-item>
-            </lightning-layout>
+                </template>
+                <template if:false={isImage}>
+                    <div class="video-div"> 
+                        <iframe id="videoLink" src={nasaPicObj.url} frameborder="0" style="width:100%; min-height:600px"></iframe>
+                    </div>
+                    <div class="vid-overlay">
+                        {nasaPicObj.explanation}
+                    </div>
+                </template>
+            </div>
+            <div slot="footer">
+                <span class="slds-card__footer">
+                    &#169; {nasaPicObj.copyright} | 
+                </span>
+            </div>
         </lightning-card>
-    </body>
+    </div>
+    </template>
 </template>
