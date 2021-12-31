@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NO_UI_Batch_Updated__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>US TP - Used within the Charity Commission to indicate that a Charity Account has been updated recently.</description>
+    <externalId>false</externalId>
+    <label>NO UI Batch Updated</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

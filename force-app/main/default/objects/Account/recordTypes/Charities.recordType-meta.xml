@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Charities</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Charity_EE_Compact_Layout</compactLayoutAssignment>
+    <description>Charities Commission</description>
+    <label>Charities</label>
+    <picklistValues>
+        <picklist>AccountSource</picklist>
+        <values>
+            <fullName>Advertisement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing client</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intermediary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legal Directory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Newsletter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organic search</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PPC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referral - Employee</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referral - External</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sector event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Webinar</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Engagement_Frequency__c</picklist>
+        <values>
+            <fullName>Annual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bi%C2%ADannual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Quarterly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weekly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Industry</picklist>
+        <values>
+            <fullName>Construction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Sector %26 Local Authority</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transport</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Intemediary__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Open_Matter__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ownership</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subsidiary</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Status__c</picklist>
+        <values>
+            <fullName>To Be Provided</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rating</picklist>
+        <values>
+            <fullName>Cold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Warm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Registration_Status__c</picklist>
+        <values>
+            <fullName>Registered</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Removed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Animal Charities %26 Animal Welfare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Arts %26 Culture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Charitable Jounalism and Advocacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Community Interest Company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disability</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education %28General Public%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education %28Higher%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Education %28Support Organisations%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Environment %2F Community%2F citizenship</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grant making %2F Unrestricted purposes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Health%2C Medical %26 Social Care</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Heritage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Human Rights %26 Equality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individual %28Founder%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individual %28Philanthropist%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individual %28Trustee%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interim Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intermediary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intermediary %28Social Finance%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>International%2FNGO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Livery Company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Military%2FServices</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other charitable purposes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Professional Fundraiser%2F Commercial Participator</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Sector</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relief of Need</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relief of poverty %28Almshouse%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relief of poverty %28Benevolent Fund%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Relief of poverty %28General%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion %28Church of England%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion %28Independent Church%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion %28Islam%2F Buddhism%2F Hinduism%2F Sikhism%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion %28Jewish%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion %28Methodist%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion %28Roman Catholic - Diocese%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion %28Roman Catholic - Order%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Religion %28Roman Catholic - Other%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Science</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social Enterprise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sports and Recreational</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trading subsidiary</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

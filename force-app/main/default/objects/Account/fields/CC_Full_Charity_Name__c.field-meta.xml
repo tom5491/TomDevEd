@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CC_Full_Charity_Name__c</fullName>
+    <description>CR-US</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Updated by Charities Commission.</inlineHelpText>
+    <label>CC Full Charity Name</label>
+    <length>125</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
