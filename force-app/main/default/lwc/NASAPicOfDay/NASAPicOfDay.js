@@ -7,6 +7,7 @@ export default class NASAPicOfDay extends LightningElement {
     nasaPicObj;
     isImage;
     isToday;
+    showCopyright;
     currentDate;
     
     @wire(getNasaApiKey)
@@ -67,6 +68,7 @@ export default class NASAPicOfDay extends LightningElement {
             let newDate = data.date;
             this.currentDate = new Date(newDate);
             this.isTodayCheck();
+            this.showCopyright = data.copyright !== undefined && data.copyright !== null;
             if(data.media_type === 'image'){
                 this.isImage = true;
             } else {
@@ -75,6 +77,4 @@ export default class NASAPicOfDay extends LightningElement {
             this.nasaPicObj = data;
         });
     }
-
-    
 }

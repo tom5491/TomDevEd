@@ -38,6 +38,10 @@
     font-size: 14px;
     }
 
+    .text-button {
+      cursor: pointer;
+    }
+
     .vid-overlay {
     bottom: 0;
     background: rgb(0, 0, 0);

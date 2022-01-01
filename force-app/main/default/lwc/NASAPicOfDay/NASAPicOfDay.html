@@ -20,9 +20,9 @@
                 </span>
             </div>
             <div class="date-container">
-                <span onclick={onTodayDate}>Today</span>
+                <span class="text-button" onclick={onTodayDate}>Today</span>
                 &nbsp;|&nbsp;
-                <span onclick={onRandomPic}>Random</span> 
+                <span class="text-button" onclick={onRandomPic}>Random</span> 
             </div>
             <br/>
             <div class="title">
@@ -44,11 +44,14 @@
                     </div>
                 </template>
             </div>
+            {showCopyright}
             <div slot="footer">
-                <span class="slds-card__footer">
-                    &#169; {nasaPicObj.copyright} | 
-                </span>
-            </div>
+                    <template if:true={showCopyright}>
+                    <span class="slds-card__footer">
+                        &#169; {nasaPicObj.copyright}
+                    </span>
+                </template>
+                </div>
         </lightning-card>
     </div>
     </template>
