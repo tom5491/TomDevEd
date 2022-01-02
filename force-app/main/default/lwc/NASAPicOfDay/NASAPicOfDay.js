@@ -60,7 +60,7 @@ export default class NASAPicOfDay extends LightningElement {
     handleFetch(){
         fetch(this.fetchUrl)
         .then(response => response.json())
-        .then(data => {
+        .then(data => { 
             console.log(data);
             if(Array.isArray(data)){
                 data = data[0];
