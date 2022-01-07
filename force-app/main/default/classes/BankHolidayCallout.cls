@@ -1,4 +1,18 @@
+/**
+ * @description       : 
+ * @author            : Tom Philippou
+ * @last modified on  : 07-01-2022
+ * @last modified by  : Tom Philippou
+ * Modifications Log
+ * Ver   Date         Author          Modification
+ * 1.0   07-01-2022   Tom Philippou   Initial Version
+**/
+
 public with sharing class BankHolidayCallout {
+    /**
+    * @description 
+    * @author ChangeMeIn@UserSettingsUnder.SFDoc | 01-05-2022 
+    **/
     public static void getBankHolidays(){
         Http http = new Http();
         HttpRequest req = new HttpRequest();

@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 01-05-2022
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <aura:component controller="FitBitComponentController" implements="flexipage:availableForAllPageTypes,force:hasRecordId">
     <aura:attribute name="user" type="Object" />
     <aura:attribute name="todayData" type="Object" />
@@ -30,9 +37,6 @@
             </lightning:layout>
         </aura:set>
         <aura:set attribute="footer">
-            <lightning:badge label="Tag1" />
-            <lightning:badge label="Tag2" />
-            <lightning:badge label="Tag3" />
         </aura:set>
 
         <lightning:layout multipleRows="true">
@@ -73,7 +77,7 @@
 
             <hr class="slds-p-top_small" style="margin-bottom: 0" width="100%" />
 
-            <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
+            <!-- <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="3">
                 <div class="demo-only" style="width: 320px">
                     <nav class="slds-nav-vertical" aria-label="Sub page">
                         <div class="slds-nav-vertical__section">
@@ -129,7 +133,7 @@
             </lightning:layoutItem>
             <lightning:layoutItem class="slds-m-top_small slds-p-left_small" size="9">
                 <div id="container" style="height: 400px; min-width: 310px"></div>
-            </lightning:layoutItem>
+            </lightning:layoutItem> -->
         </lightning:layout>
     </lightning:card>
 </aura:component>

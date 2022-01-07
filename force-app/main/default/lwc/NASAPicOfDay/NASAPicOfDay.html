@@ -1,11 +1,21 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 01-05-2022
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
 <template>
     <template if:true={nasaPicObj}>
     <div>
-        <lightning-card icon-name="utility:photo">
+        <lightning-card style="height: 100vh" icon-name="utility:photo">
             <div slot="title">
                 <h1>Astronomical Photo of the Day</h1>
             </div>
             <br/>
+            <div class="nasaIcon">
+                <img src="https://www.nasa.gov/sites/default/files/thumbnails/image/nasa-logo-web-rgb.png" alt="nasaIcon" class="customIcon">
+            </div>
             <div class="date-container">
                 <span>
                     <lightning-button-icon name="backDate" icon-name="utility:chevronleft" variant="bare" onclick={onDateChange}></lightning-button-icon>

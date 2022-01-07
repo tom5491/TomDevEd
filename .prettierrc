@@ -1,5 +1,8 @@
 {
   "trailingComma": "none",
+  "tabwith": 4,
+  "printWidth": 240,
+  "singleQuote": false,
   "overrides": [
     {
       "files": "**/lwc/**/*.html",
