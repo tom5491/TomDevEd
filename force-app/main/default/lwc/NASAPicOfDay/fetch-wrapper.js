@@ -87,6 +87,7 @@ export default class FetchWrapper {
   }
 
   get(endpoint, options = {}) {
+    console.log("endpoint: " + endpoint);
     return this._fetchJSON(endpoint, {
       ...options,
       method: "GET"

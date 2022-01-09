@@ -1,7 +1,11 @@
 import { LightningElement, wire } from 'lwc';
 import getNasaApiKey from '@salesforce/apex/NASAPicOfDayController.getNasaApiKey';
+import fetchWrapper from "./fetch-wrapper.js";
 
-export default class NASAPicOfDay extends LightningElement {
+export default class nasaPicOfDay extends LightningElement {
+    endpoint = "planetary/apod";
+    urlParameters = {};
+
     nasaApiKey;
     fetchUrl;
     nasaPicObj;
@@ -9,21 +13,24 @@ export default class NASAPicOfDay extends LightningElement {
     isToday;
     showCopyright;
     currentDate;
+    nasaFetchWrapper;
     
     @wire(getNasaApiKey)
     wiredIntegration({ error, data }) {
         if (data) {
             this.nasaApiKey = data;
             this.onTodayDate();
+            this.endpoint = "planetary/apod";
         } else if (error) {
             console.log('Something went wrong:', error);
         }
     }
 
-    onTodayDate(){
-        const nasaApiKey = this.nasaApiKey;
-        this.fetchUrl = nasaApiKey.Base_Url__c + 'planetary/apod?api_key=' + nasaApiKey.Authentication_Token__c;
-        console.log("fetchUrl: " + this.fetchUrl);
+    onTodayDate(){        
+        this.urlParameters = {
+            "api_key": this.nasaApiKey.Authentication_Token__c
+        }
+
         this.handleFetch();
     }
 
@@ -36,14 +43,20 @@ export default class NASAPicOfDay extends LightningElement {
         } else {
             this.currentDate = this.currentDate.setDate(this.currentDate.getDate() + 1);
         }
-        this.fetchUrl = nasaApiKey.Base_Url__c + 'planetary/apod?api_key=' + nasaApiKey.Authentication_Token__c + '&date=' + new Date(this.currentDate).toISOString().substring(0, 10);
+        this.urlParameters = {
+            "api_key": nasaApiKey.Authentication_Token__c,
+            "date": new Date(this.currentDate).toISOString().substring(0, 10)
+        }
         this.handleFetch();
     }
 
     onRandomPic(){
         const nasaApiKey = this.nasaApiKey;
-        this.fetchUrl = nasaApiKey.Base_Url__c + 'planetary/apod?api_key=' + nasaApiKey.Authentication_Token__c + '&count=1';
-
+        this.urlParameters = {
+            "api_key": nasaApiKey.Authentication_Token__c,
+            "count": 1
+        }
+        
         this.handleFetch();
     }
 
@@ -58,15 +71,15 @@ export default class NASAPicOfDay extends LightningElement {
     }
 
     handleFetch(){
-        fetch(this.fetchUrl)
-        .then(response => response.json())
+        const nasaFetchWrapper = new fetchWrapper({ baseURL: this.nasaApiKey.Base_Url__c }).setUrlParameters(this.urlParameters);
+        console.log("handleFetch endpoint: " + this.endpoint);
+        nasaFetchWrapper.get(this.endpoint, {})
         .then(data => { 
             console.log(data);
             if(Array.isArray(data)){
                 data = data[0];
             }
-            let newDate = data.date;
-            this.currentDate = new Date(newDate);
+            this.currentDate = new Date(data.date);
             this.isTodayCheck();
             this.showCopyright = data.copyright !== undefined && data.copyright !== null;
             if(data.media_type === 'image'){
