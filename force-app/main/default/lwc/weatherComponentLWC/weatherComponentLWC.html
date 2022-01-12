@@ -1,7 +1,7 @@
 <!--
   @description       : 
   @author            : Tom Philippou
-  @last modified on  : 10-01-2022
+  @last modified on  : 12-01-2022
   @last modified by  : Tom Philippou
   Modifications Log
   Ver   Date         Author          Modification
@@ -9,8 +9,30 @@
 -->
 <template>
     <div>
-        <lightning-card title="Current Weather" >
-            Test
-        </lightning-card>
+        <template if:true={weatherData}>
+            <lightning-card>
+                <h3 slot="title">
+                    <lightning-icon icon-name="custom:custom3" size="small"></lightning-icon>
+                    <span class="slds-m-horizontal_small">
+                        Current Weather
+                    </span>
+                </h3>
+                <div class="main">
+                    <p>{weatherIcon}</p>
+                    <p>{weatherData.weather.main}</p>
+                    <p>{weatherData.weather.description}</p>
+                    <p><b>Temperature:</b> {weatherData.main.temp}</p>
+                    <p><b>Feels Like:</b> {weatherData.main.feels_like}</p>
+                </div>
+                <div slot="footer">
+                    <p><b>Last Updated</b></p>
+                    <!-- {weatherData.dt} -->
+                    <lightning-formatted-date-time value={weatherData.dt} year="2-digit" month="2-digit" day="2-digit"
+                        hour="2-digit" minute="2-digit">
+                    </lightning-formatted-date-time>
+                    </p>
+                </div>
+            </lightning-card>
+        </template>
     </div>
 </template>

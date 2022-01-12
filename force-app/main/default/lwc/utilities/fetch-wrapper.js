@@ -1,4 +1,4 @@
-export default class FetchWrapper {
+export class FetchWrapper {
     // ### OLD VERSION ###
     // constructor(baseURL) {
     //     this.baseURL = baseURL;
