@@ -1,7 +1,7 @@
 <!--
   @description       : 
   @author            : Tom Philippou
-  @last modified on  : 12-01-2022
+  @last modified on  : 13-01-2022
   @last modified by  : Tom Philippou
   Modifications Log
   Ver   Date         Author          Modification
@@ -18,27 +18,29 @@
                     </span>
                 </h3>
                 <div class="main">
+                    <p>
+                        <lightning-icon icon-name="utility:checkin" size="x-small"></lightning-icon>
+                        <span>{weatherData.name}</span>
+                    </p>
                     <div class="weatherIcon">
-                        <img src={weatherIcon}></img>
+                        <img src={weatherData.weather.icon}></img>
                     </div>
                     <p>{weatherData.weather.main}</p>
                     <p>{weatherData.weather.description}</p>
-                    <p><b>Temperature:</b> {weatherData.main.temp}</p>
-                    <p><b>Feels Like:</b> {weatherData.main.feels_like}</p>
+                    <p><b>Temperature:</b> {weatherData.main.temp}&#176;</p>
+                    <p><b>Feels Like:</b> {weatherData.main.feels_like}&#176;</p>
                 </div>
                 <div class="nextDays">
                     <div class="row">
-                        <div class="">
-                            <div class="tile-container">
-                                <div class="tile">A</div>
-                                <div class="tile">B</div>
-                                <div class="tile">C</div>
-                                <div class="tile">D</div>
-                                <div class="tile">E</div>
-                            </div>
+                        <div class="tile-container">
+                            <!-- <template for:each={} -->
+                            <div class="tile">A</div>
+                            <div class="tile">B</div>
+                            <div class="tile">C</div>
+                            <div class="tile">D</div>
+                            <div class="tile">E</div>
                         </div>
                     </div>
-                    <!-- <template for:each={} -->
                 </div>
                 <div slot="footer">
                     <p><b>Last Updated</b></p>

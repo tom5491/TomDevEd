@@ -8,21 +8,23 @@ export default class WeatherComponentLWC extends LightningElement {
     fetchWrapper;
     endpoint = "weather";
     city = "Birmingham,uk";
-    weatherIconMap = {};
+    selectedWeatherIconMap = {};
     weatherData;
-    weatherIconsVar = weatherIcons;
-    weatherIcon = weatherIcons + '/WeatherIcons/005-sun.png';
+    weatherIconPath = weatherIcons + '/WeatherIcons/';
+    dailyData;
+    weatherIconMap = {
+                "Thunderstorm": "038-storm-3.png",
+                "Drizzle": "008-rainy",
+                "Rain": "028-rainy-1",
+                "Snow": "019-snowy.png",
+                "Clear": "005-sun.png",
+                "Clouds": "007-cloud.png",
+                "Atmosphere": "036-foog.png"
+            };
 
     // constructor(){
-    //     this.weatherIconMap = {
-    //         "Thunderstorm":
-    //         "Drizzle":
-    //         "Rain": 
-    //         "Snow":
-    //         "Atmosphere":
-    //         "Clear":
-    //         "Clouds":
-    //     };
+    //     super();
+    //     
     // }
 
     @wire(weatherCredentials, {"integrationName": "Open Weather"})
@@ -33,6 +35,14 @@ export default class WeatherComponentLWC extends LightningElement {
             this.instantiateWeatherFetchWrapper();
         } else if (error) {
             console.log('Something went wrong:', error);
+        }
+    }
+
+    getWeatherIcon(condition){
+        if(!condition in this.weatherIconMap){
+            return this.weatherIconMap.Atmosphere;
+        } else {
+            return this.weatherIconMap[condition];
         }
     }
 
@@ -52,7 +62,8 @@ export default class WeatherComponentLWC extends LightningElement {
             "lon": lon, 
             "lat": lat, 
             "appId": this.integrationObject.Authentication_Token__c,
-            "exclude": "minutely"
+            "exclude": "minutely",
+            "units": "metric"
         });
         this.endpoint = "onecall";
         this.handleFetch();
@@ -61,16 +72,24 @@ export default class WeatherComponentLWC extends LightningElement {
     handleFetch(){
         this.fetchWrapper.get(this.endpoint, {})
         .then(data => {
-            console.log("Weather Data: " + JSON.stringify(data));
             if(this.endpoint === "weather"){
                 data.weather = data.weather[0];
+                data.weather.icon = this.weatherIconPath + this.getWeatherIcon(data.weather.main);
                 data.dt = String(data.dt).padEnd(13,"0");
                 this.weatherData = data;
+                console.log("Weather Data: " + JSON.stringify(data));
                 this.instantiateOneCallFetchWrapper(data.coord.lon, data.coord.lat);
+            } else {
+                data.daily.splice(0,1);
+                data.daily.splice(5);
+                data.daily.forEach(day => day.weather = day.weather[0]);
+                const dailyData = data;
+
+                console.log("dailyData : " + JSON.stringify(dailyData));
             }
         })
         .catch(err => {
-            console.log("Error: " + err);
+            console.error("Error: " + err);
         });
     }
 
