@@ -83,6 +83,7 @@ export default class WeatherComponentLWC extends LightningElement {
                 data.daily.splice(0,1);
                 data.daily.splice(5);
                 data.daily.forEach(day => day.weather = day.weather[0]);
+                data.hourly = data.hourly.filter(hour => hour.weather = day.weather[0]);
                 const dailyData = data;
 
                 console.log("dailyData : " + JSON.stringify(dailyData));
