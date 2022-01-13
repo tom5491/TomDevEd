@@ -1,4 +1,4 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import weatherCredentials from '@salesforce/apex/GetIntegrationCredentials.getCredentials';
 import {FetchWrapper} from 'c/utilities';
 import weatherIcons from '@salesforce/resourceUrl/WeatherIcons';
@@ -11,6 +11,7 @@ export default class WeatherComponentLWC extends LightningElement {
     weatherIconMap = {};
     weatherData;
     weatherIconsVar = weatherIcons;
+    weatherIcon = weatherIcons + '/WeatherIcons/005-sun.png';
 
     // constructor(){
     //     this.weatherIconMap = {

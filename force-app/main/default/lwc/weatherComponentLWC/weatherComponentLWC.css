@@ -2,3 +2,25 @@
 .main {
     padding: 10px;
 }
+
+.weatherIcon {
+    height: 30px;
+    width: 30px;
+}
+
+.tile-container{
+    position: relative;
+    border: solid #BDBDBD 2px;
+    border-radius: 5px;
+    margin: 5px 5px;
+    width:100%;
+    font-size:0; /* add */
+  }
+  
+  .tile{
+    font-size:20px; /* or whatever you want */
+    width: 20%;
+    min-height:22px;
+    border: 1px #BDBDBD solid;
+    display: inline-block;
+  }
