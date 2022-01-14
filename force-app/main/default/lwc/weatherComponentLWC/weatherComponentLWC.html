@@ -1,7 +1,7 @@
 <!--
   @description       : 
   @author            : Tom Philippou
-  @last modified on  : 13-01-2022
+  @last modified on  : 14-01-2022
   @last modified by  : Tom Philippou
   Modifications Log
   Ver   Date         Author          Modification
@@ -33,12 +33,23 @@
                 <div class="nextDays">
                     <div class="row">
                         <div class="tile-container">
-                            <!-- <template for:each={} -->
-                            <div class="tile">A</div>
-                            <div class="tile">B</div>
+                            <template for:each={dailyData} for:item="daily">
+
+                                <div key={daily.dt} class="tile">
+                                    <div class="weatherIcon">
+                                        <img src={daily.weather.icon}></img>
+                                    </div>
+                                    <p>
+                                        <lightning-formatted-date-time value={daily.dt} weekday="short" day="numeric">
+                                        </lightning-formatted-date-time>
+                                    </p>
+                                    <p>{daily.temp.max}</p>
+                                </div>
+                            </template>
+                            <!-- <div class="tile">B</div>
                             <div class="tile">C</div>
                             <div class="tile">D</div>
-                            <div class="tile">E</div>
+                            <div class="tile">E</div> -->
                         </div>
                     </div>
                 </div>

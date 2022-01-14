@@ -1,5 +1,5 @@
 export class FetchWrapper {
-    // ### OLD VERSION ###
+    /* ### OLD VERSION ###
     // constructor(baseURL) {
     //     this.baseURL = baseURL;
     // }
@@ -29,7 +29,7 @@ export class FetchWrapper {
     //         },
     //         body: JSON.stringify(body)
     //     }).then(response => response.json());
-    // }
+    // } */
 
   constructor(options = {}) {
     this._baseURL = options.baseURL || "";
