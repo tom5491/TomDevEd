@@ -1,5 +1,5 @@
 export class FetchWrapper {
-    /* ### OLD VERSION ###
+  /* ### OLD VERSION ###
     // constructor(baseURL) {
     //     this.baseURL = baseURL;
     // }
@@ -38,7 +38,7 @@ export class FetchWrapper {
   }
 
   async _fetchJSON(endpoint, options = {}) {
-    console.log("fullUrl: " + this._baseURL + endpoint + this._urlParameters)
+    // console.log("fullUrl: " + this._baseURL + endpoint + this._urlParameters)
     const res = await fetch(this._baseURL + endpoint + this._urlParameters, {
       ...options,
       headers: this._headers
@@ -46,8 +46,7 @@ export class FetchWrapper {
 
     if (!res.ok) throw new Error(res.statusText);
 
-    if (options.parseResponse !== false && res.status !== 204)
-      return res.json();
+    if (options.parseResponse !== false && res.status !== 204) return res.json();
 
     return undefined;
   }
@@ -77,7 +76,7 @@ export class FetchWrapper {
 
   setBasicAuth(username, password) {
     this._headers.Authorization = `Basic ${btoa(`${username}:${password}`)}`;
-    console.log("Authentication info: " + this._headers.Authorization);
+    // console.log("Authentication info: " + this._headers.Authorization);
     return this;
   }
 
@@ -87,7 +86,7 @@ export class FetchWrapper {
   }
 
   get(endpoint, options = {}) {
-    console.log("endpoint: " + endpoint);
+    // console.log("endpoint: " + endpoint);
     return this._fetchJSON(endpoint, {
       ...options,
       method: "GET"

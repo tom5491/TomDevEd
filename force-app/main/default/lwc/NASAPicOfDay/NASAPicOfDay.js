@@ -1,6 +1,6 @@
 import { LightningElement, wire } from "lwc";
 import getNasaApiKey from "@salesforce/apex/NASAPicOfDayController.getNasaApiKey";
-import fetchWrapper from "./fetch-wrapper.js";
+import { FetchWrapper } from "c/utilities";
 
 export default class nasaPicOfDay extends LightningElement {
   endpoint = "planetary/apod";
@@ -71,7 +71,7 @@ export default class nasaPicOfDay extends LightningElement {
   }
 
   handleFetch() {
-    const nasaFetchWrapper = new fetchWrapper({ baseURL: this.nasaApiKey.Base_Url__c }).setUrlParameters(
+    const nasaFetchWrapper = new FetchWrapper({ baseURL: this.nasaApiKey.Base_Url__c }).setUrlParameters(
       this.urlParameters
     );
     // console.log("handleFetch endpoint: " + this.endpoint);

@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from "lwc";
+import { LightningElement, wire } from "lwc";
 import weatherCredentials from "@salesforce/apex/GetIntegrationCredentials.getCredentials";
 import { FetchWrapper } from "c/utilities";
 import weatherIcons from "@salesforce/resourceUrl/WeatherIcons";
@@ -9,6 +9,7 @@ import chartJsAdapterDate from "@salesforce/resourceUrl/chartJsAdapterDate";
 export default class WeatherComponentLWC extends LightningElement {
   chartJsInitialised = false;
   dataInitialised = false;
+  finishedLoading;
   integrationObject;
   fetchWrapper;
   endpoint = "weather";
@@ -33,9 +34,13 @@ export default class WeatherComponentLWC extends LightningElement {
   @wire(weatherCredentials, { integrationName: "Open Weather" })
   wiredIntegration({ error, data }) {
     if (data) {
-      //   console.log("data:", data);
+      console.log("data:", data);
       this.integrationObject = data;
-      this.instantiateWeatherFetchWrapper();
+      Promise.all([loadScript(this, chartminjs), loadScript(this, chartJsAdapterDate)])
+        .then(() => this.instantiateWeatherFetchWrapper())
+        .catch((err) => {
+          console.error("Error: " + err);
+        });
     } else if (error) {
       console.log("Something went wrong:", error);
     }
@@ -73,12 +78,13 @@ export default class WeatherComponentLWC extends LightningElement {
     this.fetchWrapper
       .get(this.endpoint, {})
       .then((data) => {
+        console.log("THEN 1");
         if (this.endpoint === "weather") {
           data.weather = data.weather[0];
           data.weather.icon = this.weatherIconPath + this.getWeatherIcon(data.weather.main);
           data.dt = String(data.dt).padEnd(13, "0");
           this.weatherData = data;
-          //   console.log("Weather Data: " + JSON.stringify(data));
+          console.log("Weather Data: " + JSON.stringify(data));
           this.instantiateOneCallFetchWrapper(data.coord.lon, data.coord.lat);
         } else {
           data.daily.splice(0, 1);
@@ -103,16 +109,17 @@ export default class WeatherComponentLWC extends LightningElement {
             hr.sunset = String(hr.sunset).padEnd(13, "0");
             hr.moonrise = String(hr.moonrise).padEnd(13, "0");
             hr.moonset = String(hr.moonset).padEnd(13, "0");
-            const hrObject = { y: Math.round(hr.temp), x: Number.parseInt(hr.dt, 10) };
+            const hrObject = { x: Number.parseInt(hr.dt, 10), y: Math.round(hr.temp) };
             this.hourlyData.push(hrObject);
           });
 
           this.dailyData = data.daily;
 
           //   console.log("hourlyData : " + JSON.stringify(data.hourly));
-          //   console.log("hourlyData : " + JSON.stringify(this.hourlyData));
+          console.log("hourlyData : " + JSON.stringify(this.hourlyData));
 
           this.dataInitialised = true;
+          this.finishedLoading = true;
           this.renderChart();
         }
       })
@@ -121,32 +128,32 @@ export default class WeatherComponentLWC extends LightningElement {
       });
   }
 
-  renderedCallback() {
-    if (this.chartJsInitialised) {
-      return;
-    }
-    console.log("entered render callback");
+  // renderedCallback() {
+  //   if (this.chartJsInitialised) {
+  //     return;
+  //   }
+  //   this.chartJsInitialised = true;
 
-    Promise.all([loadScript(this, chartminjs), loadScript(this, chartJsAdapterDate)])
-      .then(() => {
-        this.renderChart();
-        this.chartJsInitialised = true;
-      })
-      .catch((error) => {
-        console.error({
-          message: "Error occured on ChartJs",
-          error
-        });
-      });
-  }
+  //   Promise.all([loadScript(this, chartminjs), loadScript(this, chartJsAdapterDate)])
+  //     .then(() => {
+  //       this.finishedLoading = true;
+  //       this.renderChart();
+  //     })
+  //     .catch((err) => {
+  //       console.error({
+  //         message: "Error occured on ChartJs",
+  //         error: err
+  //       });
+  //     });
+  // }
 
   renderChart() {
-    if (!this.dataInitialised || !this.chartJsInitialised) {
-      return;
-    }
-
+    // if (!this.dataInitialised || !this.finishedLoading) {
+    //   console.log("THEN 3");
     console.log("this.dataInitialised: " + this.dataInitialised);
     console.log("this.chartJsInitialised: " + this.chartJsInitialised);
+    //   return;
+    // }
 
     // const labels = ["January", "February", "March", "April", "May", "June"];
 
@@ -171,7 +178,6 @@ export default class WeatherComponentLWC extends LightningElement {
       data: {
         datasets: [
           {
-            tension: 0.4,
             fill: false,
             label: "Line Dataset 1",
             data: this.hourlyData,
@@ -190,17 +196,18 @@ export default class WeatherComponentLWC extends LightningElement {
         },
         scales: {
           xAxes: {
-            type: "time",
-            time: {
-              //   unit: "hour",
-              //   displayFormats: {
-              //     hour: "HH:mm"
-              //   }
-            }
+            type: "time"
+            // time: {
+            //   //   unit: "hour",
+            //   //   displayFormats: {
+            //   //     hour: "HH:mm"
+            //   //   }
+            // }
           },
           yAxes: {
             type: "linear",
             ticks: {
+              //   beginAtZero: true,
               autoSkip: true,
               suggestedMin: 0,
               suggestedMax: 100,
@@ -210,6 +217,8 @@ export default class WeatherComponentLWC extends LightningElement {
         }
       }
     };
+
+    console.log("THEN 4");
 
     const ctx = this.template.querySelector("canvas.linechart").getContext("2d");
     this.chart = new window.Chart(ctx, config);

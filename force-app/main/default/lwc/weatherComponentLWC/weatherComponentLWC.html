@@ -29,10 +29,10 @@
           <p><b>Feels Like:</b> {weatherData.main.feels_like}&#176;</p>
         </div>
 
-        <div if:true={chartJsInitialised} class="slds-col--padded slds-size--1-of-1">
+        <div if:true={finishedLoading} class="slds-col--padded slds-size--1-of-1">
           <canvas class="linechart" lwc:dom="manual"></canvas>
         </div>
-        <div if:false={chartJsInitialised} class="slds-col--padded slds-size--1-of-1">ChartJs Not loaded yet</div>
+        <div if:false={finishedLoading} class="slds-col--padded slds-size--1-of-1">ChartJs Not loaded yet</div>
 
         <div class="nextDays">
           <div class="row">
