@@ -1,67 +1,90 @@
 <!--
   @description       : 
   @author            : Tom Philippou
-  @last modified on  : 14-01-2022
+  @last modified on  : 15-01-2022
   @last modified by  : Tom Philippou
   Modifications Log
   Ver   Date         Author          Modification
   1.0   10-01-2022   Tom Philippou   Initial Version
 -->
 <template>
-    <div>
-        <template if:true={weatherData}>
-            <lightning-card>
-                <h3 slot="title">
-                    <lightning-icon icon-name="custom:custom3" size="small"></lightning-icon>
-                    <span class="slds-m-horizontal_small">
-                        Current Weather
-                    </span>
-                </h3>
-                <div class="main">
-                    <p>
-                        <lightning-icon icon-name="utility:checkin" size="x-small"></lightning-icon>
-                        <span>{weatherData.name}</span>
-                    </p>
-                    <div class="weatherIcon">
-                        <img src={weatherData.weather.icon}></img>
-                    </div>
-                    <p>{weatherData.weather.main}</p>
-                    <p>{weatherData.weather.description}</p>
-                    <p><b>Temperature:</b> {weatherData.main.temp}&#176;</p>
-                    <p><b>Feels Like:</b> {weatherData.main.feels_like}&#176;</p>
-                </div>
-                <div class="nextDays">
-                    <div class="row">
-                        <div class="tile-container">
-                            <template for:each={dailyData} for:item="daily">
+  <div>
+    <template if:true={weatherData}>
+      <lightning-card>
+        <h3 slot="title">
+          <lightning-icon
+            icon-name="custom:custom3"
+            size="small"
+          ></lightning-icon>
+          <span class="slds-m-horizontal_small"> Current Weather </span>
+        </h3>
+        <div class="main">
+          <p>
+            <lightning-icon
+              icon-name="utility:checkin"
+              size="x-small"
+            ></lightning-icon>
+            <span>{weatherData.name}</span>
+          </p>
+          <div class="weatherIcon">
+            <img src={weatherData.weather.icon} />
+          </div>
+          <p>{weatherData.weather.main}</p>
+          <p>{weatherData.weather.description}</p>
+          <p><b>Temperature:</b> {weatherData.main.temp}&#176;</p>
+          <p><b>Feels Like:</b> {weatherData.main.feels_like}&#176;</p>
+        </div>
 
-                                <div key={daily.dt} class="tile">
-                                    <div class="weatherIcon">
-                                        <img src={daily.weather.icon}></img>
-                                    </div>
-                                    <p>
-                                        <lightning-formatted-date-time value={daily.dt} weekday="short" day="numeric">
-                                        </lightning-formatted-date-time>
-                                    </p>
-                                    <p>{daily.temp.max}</p>
-                                </div>
-                            </template>
-                            <!-- <div class="tile">B</div>
+        <div class="nextDays">
+          <div class="row">
+            <div class="tile-container">
+              <template for:each={dailyData} for:item="daily">
+                <div key={daily.dt} class="tile slds-clearfix">
+                  <div class="dailyWeatherIcon">
+                    <img src={daily.weather.icon} />
+                  </div>
+                  <div>
+                    <p>
+                      <lightning-formatted-date-time
+                        value={daily.dt}
+                        weekday="short"
+                        day="numeric"
+                      >
+                      </lightning-formatted-date-time>
+                    </p>
+                    <p>
+                      <lightning-formatted-number
+                        value={daily.temp.max}
+                        maximum-fraction-digits="0"
+                      ></lightning-formatted-number
+                      >&#176;
+                    </p>
+                  </div>
+                </div>
+              </template>
+              <!-- <div class="tile">B</div>
                             <div class="tile">C</div>
                             <div class="tile">D</div>
                             <div class="tile">E</div> -->
-                        </div>
-                    </div>
-                </div>
-                <div slot="footer">
-                    <p><b>Last Updated</b></p>
-                    <!-- {weatherData.dt} -->
-                    <lightning-formatted-date-time value={weatherData.dt} year="2-digit" month="2-digit" day="2-digit"
-                        hour="2-digit" minute="2-digit">
-                    </lightning-formatted-date-time>
-                    </p>
-                </div>
-            </lightning-card>
-        </template>
-    </div>
+            </div>
+          </div>
+        </div>
+        <div slot="footer">
+          <p><b>Last Updated</b></p>
+          <!-- {weatherData.dt} -->
+          <p>
+            <lightning-formatted-date-time
+              value={weatherData.dt}
+              year="2-digit"
+              month="2-digit"
+              day="2-digit"
+              hour="2-digit"
+              minute="2-digit"
+            >
+            </lightning-formatted-date-time>
+          </p>
+        </div>
+      </lightning-card>
+    </template>
+  </div>
 </template>
