@@ -9,7 +9,6 @@ import chartJsAdapterDate from "@salesforce/resourceUrl/chartJsAdapterDate";
 export default class WeatherComponentLWC extends LightningElement {
   chartJsInitialised = false;
   dataInitialised = false;
-  finishedLoading;
   integrationObject;
   fetchWrapper;
   endpoint = "weather";
@@ -36,11 +35,7 @@ export default class WeatherComponentLWC extends LightningElement {
     if (data) {
       console.log("data:", data);
       this.integrationObject = data;
-      Promise.all([loadScript(this, chartminjs), loadScript(this, chartJsAdapterDate)])
-        .then(() => this.instantiateWeatherFetchWrapper())
-        .catch((err) => {
-          console.error("Error: " + err);
-        });
+      this.instantiateWeatherFetchWrapper();
     } else if (error) {
       console.log("Something went wrong:", error);
     }
@@ -78,15 +73,16 @@ export default class WeatherComponentLWC extends LightningElement {
     this.fetchWrapper
       .get(this.endpoint, {})
       .then((data) => {
-        console.log("THEN 1");
         if (this.endpoint === "weather") {
+          console.log("### weather fetch 1");
           data.weather = data.weather[0];
           data.weather.icon = this.weatherIconPath + this.getWeatherIcon(data.weather.main);
           data.dt = String(data.dt).padEnd(13, "0");
           this.weatherData = data;
-          console.log("Weather Data: " + JSON.stringify(data));
+          // console.log("Weather Data: " + JSON.stringify(data));
           this.instantiateOneCallFetchWrapper(data.coord.lon, data.coord.lat);
         } else {
+          console.log("### weather fetch 2 start");
           data.daily.splice(0, 1);
           data.daily.splice(5);
           data.daily.forEach((day) => {
@@ -109,17 +105,18 @@ export default class WeatherComponentLWC extends LightningElement {
             hr.sunset = String(hr.sunset).padEnd(13, "0");
             hr.moonrise = String(hr.moonrise).padEnd(13, "0");
             hr.moonset = String(hr.moonset).padEnd(13, "0");
-            const hrObject = { x: Number.parseInt(hr.dt, 10), y: Math.round(hr.temp) };
+            const hrObject = { y: Math.round(hr.temp), x: Number.parseInt(hr.dt, 10) };
             this.hourlyData.push(hrObject);
           });
 
           this.dailyData = data.daily;
 
           //   console.log("hourlyData : " + JSON.stringify(data.hourly));
-          console.log("hourlyData : " + JSON.stringify(this.hourlyData));
+          // console.log("hourlyData : " + JSON.stringify(this.hourlyData));
+
+          console.log("### weather fetch 2 end");
 
           this.dataInitialised = true;
-          this.finishedLoading = true;
           this.renderChart();
         }
       })
@@ -128,35 +125,38 @@ export default class WeatherComponentLWC extends LightningElement {
       });
   }
 
-  // renderedCallback() {
-  //   if (this.chartJsInitialised) {
-  //     return;
-  //   }
-  //   this.chartJsInitialised = true;
+  renderedCallback() {
+    if (this.chartJsInitialised) {
+      return;
+    }
+    console.log("### renderedCallback");
 
-  //   Promise.all([loadScript(this, chartminjs), loadScript(this, chartJsAdapterDate)])
-  //     .then(() => {
-  //       this.finishedLoading = true;
-  //       this.renderChart();
-  //     })
-  //     .catch((err) => {
-  //       console.error({
-  //         message: "Error occured on ChartJs",
-  //         error: err
-  //       });
-  //     });
-  // }
+    this.chartJsInitialised = true;
+
+    Promise.all([loadScript(this, chartminjs), loadScript(this, chartJsAdapterDate)])
+      .then(() => {
+        this.finishedLoading = true;
+        this.renderChart();
+        console.log("### renderedCallback finished");
+      })
+      .catch((error) => {
+        console.error({
+          message: "Error occured on ChartJs",
+          error
+        });
+      });
+  }
 
   renderChart() {
-    // if (!this.dataInitialised || !this.finishedLoading) {
-    //   console.log("THEN 3");
+    if (!this.dataInitialised || !this.finishedLoading) {
+      return;
+    }
+
     console.log("this.dataInitialised: " + this.dataInitialised);
     console.log("this.chartJsInitialised: " + this.chartJsInitialised);
-    //   return;
-    // }
 
     // const labels = ["January", "February", "March", "April", "May", "June"];
-
+    //
     // const config = {
     //   type: "line",
     //   data: {
@@ -190,6 +190,7 @@ export default class WeatherComponentLWC extends LightningElement {
       },
       options: {
         tension: 0.4,
+        // responsive: true,
         title: {
           display: true,
           text: "Sand Samples Against Comm Weight %."
@@ -218,8 +219,7 @@ export default class WeatherComponentLWC extends LightningElement {
       }
     };
 
-    console.log("THEN 4");
-
+    console.log("this.template: " + this.template);
     const ctx = this.template.querySelector("canvas.linechart").getContext("2d");
     this.chart = new window.Chart(ctx, config);
     this.chart.canvas.parentNode.style.height = "100%";
