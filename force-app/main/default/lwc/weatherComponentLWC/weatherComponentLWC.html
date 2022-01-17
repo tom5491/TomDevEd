@@ -8,76 +8,78 @@
   1.0   10-01-2022   Tom Philippou   Initial Version
 -->
 <template>
-  <div>
-    <template if:true={weatherData}>
-      <lightning-card>
-        <h3 slot="title">
-          <lightning-icon icon-name="custom:custom3" size="small"></lightning-icon>
-          <span class="slds-m-horizontal_small"> Current Weather </span>
-        </h3>
-        <div class="main">
-          <p>
-            <lightning-icon icon-name="utility:checkin" size="x-small"></lightning-icon>
-            <span>{weatherData.name}</span>
-          </p>
-          <div class="weatherIcon">
-            <img src={weatherData.weather.icon} />
-          </div>
-          <p>{weatherData.weather.main}</p>
-          <p>{weatherData.weather.description}</p>
-          <p><b>Temperature:</b> {weatherData.main.temp}&#176;</p>
-          <p><b>Feels Like:</b> {weatherData.main.feels_like}&#176;</p>
-        </div>
-
-        <div if:true={chartJsInitialised} class="slds-col--padded slds-size--1-of-1">
-          <canvas class="linechart" lwc:dom="manual"></canvas>
-        </div>
-        <div if:false={chartJsInitialised} class="slds-col--padded slds-size--1-of-1">ChartJs Not loaded yet</div>
-
-        <div class="nextDays">
-          <div class="row">
-            <div class="tile-container">
-              <template for:each={dailyData} for:item="daily">
-                <div key={daily.dt} class="tile slds-clearfix">
-                  <div>
+    <div>
+        <lightning-card>
+            <h3 slot="title">
+                <lightning-icon icon-name="custom:custom3" size="small"></lightning-icon>
+                <span class="slds-m-horizontal_small"> Current Weather </span>
+            </h3>
+            <template if:true={dataInitialized}>
+                <div class="main">
                     <p>
-                      <lightning-formatted-date-time value={daily.dt} weekday="short" day="numeric">
-                      </lightning-formatted-date-time>
+                        <lightning-icon icon-name="utility:checkin" size="x-small"></lightning-icon>
+                        <span>{weatherData.name}</span>
                     </p>
-                  </div>
-                  <div class="dailyWeatherIcon">
-                    <img src={daily.weather.icon} />
-                  </div>
-                  <div>
-                    <p>
-                      <lightning-formatted-number
-                        value={daily.temp.max}
-                        maximum-fraction-digits="0"
-                      ></lightning-formatted-number
-                      >&#176;
-                    </p>
-                  </div>
+                    <div class="weatherIcon">
+                        <img src={weatherData.weather.icon} />
+                    </div>
+                    <p>{weatherData.weather.main}</p>
+                    <p>{weatherData.weather.description}</p>
+                    <p><b>Temperature:</b> {weatherData.main.temp}&#176;</p>
+                    <p><b>Feels Like:</b> {weatherData.main.feels_like}&#176;</p>
                 </div>
-              </template>
+            </template>
+
+            <div if:true={chartJsInitialized} class="slds-col--padded slds-size--1-of-1">
+                <canvas class="linechart" lwc:dom="manual"></canvas>
             </div>
-          </div>
-        </div>
-        <div slot="footer">
-          <p><b>Last Updated</b></p>
-          <!-- {weatherData.dt} -->
-          <p>
-            <lightning-formatted-date-time
-              value={weatherData.dt}
-              year="2-digit"
-              month="2-digit"
-              day="2-digit"
-              hour="2-digit"
-              minute="2-digit"
-            >
-            </lightning-formatted-date-time>
-          </p>
-        </div>
-      </lightning-card>
-    </template>
-  </div>
+            <div if:false={chartJsInitialized} class="slds-col--padded slds-size--1-of-1">ChartJs Not loaded yet</div>
+
+            <div if:true={dataInitialized} class="nextDays">
+                <div class="row">
+                    <div class="tile-container">
+                        <template for:each={dailyData} for:item="daily">
+                            <div key={daily.dt} class="tile slds-clearfix">
+                                <div>
+                                    <p>
+                                        <lightning-formatted-date-time value={daily.dt} weekday="short" day="numeric">
+                                        </lightning-formatted-date-time>
+                                    </p>
+                                </div>
+                                <div class="dailyWeatherIcon">
+                                    <img src={daily.weather.icon} />
+                                </div>
+                                <div>
+                                    <p>
+                                        <lightning-formatted-number
+                                            value={daily.temp.max}
+                                            maximum-fraction-digits="0"
+                                        ></lightning-formatted-number
+                                        >&#176;
+                                    </p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div slot="footer">
+                <template if:true={dataInitialized}>
+                    <p><b>Last Updated</b></p>
+                    <!-- {weatherData.dt} -->
+                    <p>
+                        <lightning-formatted-date-time
+                            value={weatherData.dt}
+                            year="2-digit"
+                            month="2-digit"
+                            day="2-digit"
+                            hour="2-digit"
+                            minute="2-digit"
+                        >
+                        </lightning-formatted-date-time>
+                    </p>
+                </template>
+            </div>
+        </lightning-card>
+    </div>
 </template>
