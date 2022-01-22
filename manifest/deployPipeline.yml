@@ -1,0 +1,45 @@
+# Pipeline for building metadata and checking the deployment of a build
+
+variables:
+- ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+  - group: 'Pipeline_Variables'
+- ${{ if eq(variables['Build.SourceBranchName'], 'QA') }}:
+  - group: 'Pipeline_Variables_QA'
+
+jobs:
+- job: validateVariables
+  pool: server
+  steps:
+  - task: ManualValidation@0
+    timeoutInMinutes: 20
+    inputs:
+      instructions: 'Please Validate $(target) is the correct target for this deployment'
+      onTimeout: reject
+
+- job: run_deploy
+  dependsOn: validateVariables
+  condition: succeeded()
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  #Download Secret For Authentication
+  steps:
+  - task: DownloadSecureFile@1
+    displayName: 'Downloading Certificate'
+    name: jwtKey
+    inputs:
+      secureFile: 'server.key'
+
+  # Installs SFDX to the host
+  - script: sudo npm install sfdx-cli@7.124.0 --global
+    displayName: 'Install SFDX Using NPM'
+
+  # Authorising with OAuth
+  - script: |
+      export SFDX_AUDIENCE_URL=$(audience)
+      sfdx force:auth:jwt:grant -r $(target) --clientid $(consumerKey) --jwtkeyfile $(jwtKey.secureFilePath) --username $(username) --setdefaultdevhubusername -a DevOps
+    displayName: 'Authorising'
+
+  #Push to deploying
+  - script: sfdx force:source:deploy -u DevOps -p force-app -l $(testLevel)
+    displayName: 'Pushing Source'
